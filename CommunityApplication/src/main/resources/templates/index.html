@@ -20,8 +20,7 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">Registration and
-                Login Module</a>
+            <a class="navbar-brand" href="#" th:href="@{/}">Home Page</a>
             <h1 sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></h1>
         </div>
 
@@ -32,8 +31,37 @@
 <br>
 
 <div class="container">
-    <h1>Welcome to home page!!</h1>
     Welcome <span sec:authentication="principal.username"> User</span>
+    <h1>This is your Home Page!!</h1>
+    <h2>List of Available Communities!</h2>
+    <div class="container">
+    <div class="row">
+        <!-- Display community name -->
+        <div class="col mx-3 pr-2">
+            <h3>Community Name:</h3>
+            <ul>
+                <li th:each="community : ${communities}">
+                    <a th:href="@{'/community/' + ${community.name}}">
+                    <span th:text="${community.name}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Display community description -->
+        <div class="col mx-3 offset-md-1">
+            <h3>Community Description:</h3>
+            <ul>
+                <li th:each="community : ${communities}">
+                    <span th:text="${community.description}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <span><a href="/" th:href="@{/community/communityCreation}">You can Create a community
+								here</a></span>
+    <span sec:authentication="principal.username"> User</span>
 </div>
 
 </body>

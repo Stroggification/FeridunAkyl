@@ -8,6 +8,7 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
+    //cntr injection
+    public UserServiceImpl(UserRepository userRepository ) {
         this.userRepository = userRepository;
     }
 
@@ -51,6 +52,14 @@ public class UserServiceImpl implements UserService {
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
+    //get the user creds for the user authenticated on the current session
+
+    public User getAuthUser(){
+    UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User user = userRepository.findByEmail(principal.getUsername());
+        return user;
+     }
+
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
        return  roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());

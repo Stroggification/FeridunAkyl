@@ -1,6 +1,8 @@
 package com.SocialApp.swe578.model;
 
+import com.SocialApp.swe578.service.UserService;
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
@@ -88,4 +90,6 @@ public class User {
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
+
+
 }
