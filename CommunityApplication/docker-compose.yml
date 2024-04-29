@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=caching_sha2_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'swe578'
+      MYSQL_ROOT_PASSWORD: '123456789'
+    ports:
+      - "3306:3306"
+  spring-app:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    privileged: true

@@ -18,9 +18,7 @@ public class CommunityController {
     public CommunityDto communityDto(){return new CommunityDto();}
 
     @GetMapping("/{communityName}")
-    public  String getCommunityByName(@PathVariable String communityName, Model model){
-        communityName = communityService.getCommunityName(communityDto());
-        //model.addAttribute("community", communityDto());
+    public  String getCommunityByName(@PathVariable String communityName){
         return "community";}
 
 
