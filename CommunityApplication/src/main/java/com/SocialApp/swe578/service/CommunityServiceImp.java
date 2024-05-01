@@ -10,38 +10,70 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CommunityServiceImp implements CommunityService {
-@Autowired
+    @Autowired
     private CommunityRepository communityRepository;
-@Autowired
+    @Autowired
     private UserRepository userRepository;
 
     private UserServiceImpl userService;
+
     @Autowired
-    public CommunityServiceImp(UserServiceImpl userService) {this.userService = userService;}
+    public CommunityServiceImp(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
-    public CommunityServiceImp(CommunityRepository communityRepository){this.communityRepository = communityRepository;}
+    public CommunityServiceImp(CommunityRepository communityRepository) {
+        this.communityRepository = communityRepository;
+    }
 
-   @Override
-    public Community createCommunity(CommunityDto communityDto){
+    @Override
+    public Community createCommunity(CommunityDto communityDto) {
         User owner = userService.getAuthUser();
         List<User> subscribers = new ArrayList<>();
         subscribers.add(owner);
         Community newCommunity = new Community(communityDto.getName(), communityDto.getDescription(), owner, subscribers);
         return communityRepository.save(newCommunity);
     }
-public String getCommunityName(CommunityDto communityDto){
-        return communityDto.getName();
-}
 
-    /*
-    public Community getCommunityName(Long id){
-        return communityRepository.findById(id).orElseThrow();
+    @Override
+    public void subscribeToCommunity(String communityName) {
+        User currentUser = userService.getAuthUser();
+        Community community = communityRepository.findByName(communityName);
+        List<User> subscribersList = community.getSubscribers();
+        if (!subscribersList.contains(currentUser)) {
+            community.getSubscribers().add(currentUser);
+            communityRepository.save(community);
+        }
+
     }
-*/
+
+    @Override
+    public void unsubscribeFromCommunity(String communityName) {
+        User currentUser = userService.getAuthUser();
+        Community community = communityRepository.findByName(communityName);
+        List<User> subscribersList = community.getSubscribers();
+        if (subscribersList.contains(currentUser)) {
+            community.getSubscribers().remove(currentUser);
+            communityRepository.save(community);
+        }
+    }
+
+    @Override
+    public List<String> listSubscribers(String communityName) {
+        List<User> userList = communityRepository.findByName(communityName).getSubscribers();
+        List<String> userNameList = new ArrayList<>();
+        for (User user : userList) {
+            userNameList.add(user.getEmail());
+        }
+        return userNameList;
+    };
+
+
 }

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/community")
 public class CommunityController {
@@ -18,10 +20,23 @@ public class CommunityController {
     public CommunityDto communityDto(){return new CommunityDto();}
 
     @GetMapping("/{communityName}")
-    public  String getCommunityByName(@PathVariable String communityName){
-        return "community";}
+    public  String displayCommunityByName(@PathVariable String communityName,Model model){
+            List<String> usernames =  communityService.listSubscribers(communityName);
+            model.addAttribute("usernames", usernames);
+            return "community";}
 
 
+    @PostMapping("/{communityName}")
+    public String subscribeToCommunity(@PathVariable String communityName) {
+        communityService.subscribeToCommunity(communityName);
+        return "redirect:/community/{communityName}";
+    }
+
+    @PostMapping("/{communityName}/unsubscribe")
+    public String unsubscribeFromCommunity(@PathVariable String communityName) {
+        communityService.unsubscribeFromCommunity(communityName);
+        return "redirect:/community/{communityName}";
+    }
 
     @GetMapping("/communityCreation")
     public String showCommunityCreationForm() {return "communityCreation";}
@@ -31,6 +46,7 @@ public class CommunityController {
         communityService.createCommunity(communityDto);
         return "redirect:/community/communityCreation?success";
     }
+
 
 
 

@@ -25,10 +25,30 @@
 <br>
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 col-md-offset-6">
             <h1> Community <span th:text="${communityName}"></span> </h1>
-
-
+            <div class="d-flex justify-content-between">
+                <form th:action="@{'/community/' + ${communityName}}" method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+                <form th:action="@{'/community/' + ${communityName} + '/unsubscribe'}" method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    <button type="submit" class="btn btn-primary">Unsubscribe</button>
+                </form>
+                <div th:if="${message}" class="alert alert-warning">
+                    <p th:text="${message}"></p>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body" style="width: 300px;">
+                    <h2 class="card-title">Subscribers</h2>
+                    <ul class="list-group list-group-flush">
+                        <li th:each="username : ${usernames}" class="list-group-item" th:text="${username}"></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
