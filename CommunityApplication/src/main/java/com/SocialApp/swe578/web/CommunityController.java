@@ -25,6 +25,14 @@ public class CommunityController {
             model.addAttribute("usernames", usernames);
             return "community";}
 
+    @PostMapping("/{communityName}/delete")
+    public String deleteCommunity(@PathVariable String communityName, Model model){
+        boolean isDeleted = communityService.deleteCommunity(communityName);
+        if(isDeleted){
+        return "redirect:/";
+    }else {return "redirect:/community/{communityName}";}
+    }
+
 
     @PostMapping("/{communityName}")
     public String subscribeToCommunity(@PathVariable String communityName) {

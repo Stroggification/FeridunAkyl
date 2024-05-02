@@ -17,6 +17,8 @@ public interface CommunityService {
 
     List<String> listSubscribers(String communityName);
 
+    boolean deleteCommunity(String communityName);
+
 
     /*
     subscribeTo(User user, CommunityRepository communityRepository){

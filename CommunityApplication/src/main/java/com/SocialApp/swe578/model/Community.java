@@ -18,7 +18,7 @@ public class Community {
     @JoinColumn( name = "owner_id")
     private User owner;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "community_users",
             joinColumns = @JoinColumn(name = "community_id", referencedColumnName = "id"),
