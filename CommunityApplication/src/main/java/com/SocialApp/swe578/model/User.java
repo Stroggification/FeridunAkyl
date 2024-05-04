@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 //make this class a JPA entitiy with @Entitiy annotation
 @Entity
@@ -30,7 +31,14 @@ public class User {
             )
     )
     private Collection<Role> roles;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Community> ownedCommunities;
 
+    @ManyToMany(mappedBy = "subscribers")
+    private List<Community> subscribedCommunities;
+
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -77,6 +85,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public List<Community> getSubscribedCommunities() {
+        return subscribedCommunities;
     }
 
     public void setPassword(String password) {

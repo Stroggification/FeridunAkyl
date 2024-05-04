@@ -19,14 +19,8 @@ public interface CommunityService {
 
     boolean deleteCommunity(String communityName);
 
+    void removeUserFromCommunities();
 
-    /*
-    subscribeTo(User user, CommunityRepository communityRepository){
 
-    public void unsubscribeFrom(User user, CommunityRepository communityRepository){
-        communityRepository.getSubscribers().remove(user);
-    }
 
-    List<Community> getAllCommunities() { return userRepository.findAll()}
-*/
 }

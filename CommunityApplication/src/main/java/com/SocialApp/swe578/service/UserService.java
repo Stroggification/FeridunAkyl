@@ -9,4 +9,5 @@ import org.springframework.stereotype.Component;
 public interface UserService extends UserDetailsService {
     //Method without body that returns user take UserRegistrationDto object as param
     User save(UserRegistrationDto registrationDto);
+    void delete(String username);
 }

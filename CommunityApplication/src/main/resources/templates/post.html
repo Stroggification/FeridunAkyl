@@ -38,35 +38,39 @@
 </nav>
 <br>
 <br>
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <h1> Post Creation Page </h1>
-            <div th:if="${param.success}">
-                <div class="alert alert-info">You've successfully Created a Post, Go check it out!
-                </div>
-            </div>
-
-            <h1> Post Creation</h1>
-            <form th:action="@{'/' + ${communityName} + '/postCreation'}" method="post" th:object="${post}">
-                <div class="form-group">
-                    <label class="control-label" for="name"> Post Title </label>
-                    <input id="name" class="form-control" th:field="*{title}"
-                           required autofocus="autofocus" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="description"> Post Description </label>
-                    <textarea id="description" class="form-control" th:field="*{description}"
-                              style="height: 150px;"
-                    required autofocus="autofocus"></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Create</button>
-                </div>
-
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Title</h5>
+          <p class="card-text" th:text="${post.title}"></p>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Description</h5>
+          <p class="card-text" th:text="${post.description}"></p>
+          <p class="card-text" th:text="'Date Posted: ' + ${post.date}"></p>
+          <p class="card-text" th:text="'Posted by: ' + ${post.getCreator().getEmail()}"></p>
+        </div>
+      </div>
+        <div th:if="${post.getCreator().getEmail() == #authentication.principal.username}">
+            <form th:action="@{'/' + ${communityName} + '/' + ${postId} + '/delete'}" method="post">
+                <input type="hidden" name="_method" value="post"/>
+                <button type="submit" class="btn btn-danger">Delete Post</button>
             </form>
         </div>
     </div>
+  </div>
 </div>
+
+
+
+</div>
+
+
 </body>
 </html>
+

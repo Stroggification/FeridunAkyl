@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +40,7 @@ public class CommunityController {
         return "community";}
 
     @PostMapping("/{communityName}/delete")
-    public String deleteCommunity(@PathVariable String communityName, Model model){
+    public String deleteCommunity(@PathVariable String communityName){
         boolean isDeleted = communityService.deleteCommunity(communityName);
         if(isDeleted){
         return "redirect:/";
@@ -64,9 +64,11 @@ public class CommunityController {
     public String showCommunityCreationForm() {return "communityCreation";}
 
     @PostMapping("/communityCreation")
-    public String createCommunity(@ModelAttribute("community") CommunityDto communityDto){
+    public String createCommunity(@ModelAttribute("community") CommunityDto communityDto, RedirectAttributes redirect){
         communityService.createCommunity(communityDto);
-        return "redirect:/community/communityCreation?success";
+        String communityName = communityDto.getName();
+        redirect.addAttribute("communityName", communityName);
+        return "redirect:/community/{communityName}";
     }
 
 

@@ -17,7 +17,9 @@ public class Community {
     @ManyToOne
     @JoinColumn( name = "owner_id")
     private User owner;
-
+    //for cascade deletion
+    @OneToMany(mappedBy = "postCommunity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "community_users",

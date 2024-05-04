@@ -44,6 +44,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(String username) {
+        User user = getAuthUser();
+        User deleteUser = userRepository.findByEmail(username);
+        if(getAuthUser().getEmail().equals(deleteUser.getEmail())){
+            userRepository.delete(user);
+        }
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(username);

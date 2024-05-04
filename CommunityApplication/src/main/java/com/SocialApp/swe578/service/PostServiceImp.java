@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -53,8 +54,21 @@ public class PostServiceImp implements PostService {
         }
         return communityPostList;
     }
-    @Override
-    public void deletePost(String postName) {
 
+    @Override
+    public boolean deletePost(Long postId) {
+        boolean isDeleted = false;
+        User currentUser = userService.getAuthUser();
+        Optional<Post> postOptional = postRepository.findById(postId);
+        Post post = postOptional.orElse(null);
+        if(currentUser.equals(post.getCreator())){
+            postRepository.delete(post);
+            isDeleted = true;
+            return isDeleted;
+        }else {
+        return isDeleted;
+        }
     }
+
+
 }

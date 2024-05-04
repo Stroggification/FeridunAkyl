@@ -79,13 +79,25 @@ public class CommunityServiceImp implements CommunityService {
 
     @Override
     public boolean deleteCommunity(String communityName) {
+        boolean isDeleted = false;
         User currentUser = userService.getAuthUser();
         Community community = communityRepository.findByName(communityName);
         if (community != null && community.getOwner().equals(currentUser)) {
             communityRepository.delete(community);
-            return true;
+            isDeleted = true;
+            return isDeleted;
         } else {
-            return false;
+            return isDeleted;
+        }
+    }
+
+    @Override
+    public void removeUserFromCommunities() {
+        User user = userService.getAuthUser();
+        List<Community> communities = user.getSubscribedCommunities();
+        for (Community community : communities) {
+            community.getSubscribers().remove(user);
+            communityRepository.save(community);
         }
     }
 }

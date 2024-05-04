@@ -9,9 +9,11 @@ public interface PostService {
 
     Post createPost(PostDto postDto);
 
-    void deletePost(String postName);
-
     List<Post> listAllPostsInCommunity(String communityName);
+
+    boolean deletePost(Long postId);
+
+
 
 
 }
