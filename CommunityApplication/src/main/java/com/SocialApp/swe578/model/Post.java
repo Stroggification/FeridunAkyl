@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+
 @Entity
 @Table(name = "post", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
 public class Post {
@@ -22,7 +23,7 @@ public class Post {
     private User creator;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "community_id")
+    @JoinColumn(name = "community_id", nullable = false)
     private Community postCommunity;
 
     public Post() {

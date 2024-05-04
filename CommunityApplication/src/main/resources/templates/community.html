@@ -7,7 +7,7 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 </head>
-<body>
+<body style="background-color: #e0dcd1;">
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -51,6 +51,9 @@
                     <input type="hidden" name="_method" value="delete" />
                     <button type="submit" class="btn btn-primary">Delete This Community</button>
                 </form>
+                <form th:action="@{'/' + ${communityName} + '/postCreation'}" method="get">
+                    <button type="submit" class="btn btn-primary">Create Post</button>
+                </form>
                 <div th:if="${message}" class="alert alert-warning">
                     <p th:text="${message}"></p>
                 </div>
@@ -62,6 +65,23 @@
                     <ul class="list-group list-group-flush">
                         <li th:each="username : ${usernames}" class="list-group-item" th:text="${username}"></li>
                     </ul>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="card mb-4">
+                <div class="card-body">
+            <h2>Posts</h2>
+            <div th:each="post : ${post}" class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${post.title}"></h5>
+                        <p class="card-text" th:text="${post.description}"></p>
+                        <p class="card-text"><small class="text-muted" th:text="${post.date}"></small></p>
+                        <!-- Add more attributes as needed -->
+                    </div>
+                </div>
+                 </div>
                 </div>
             </div>
         </div>

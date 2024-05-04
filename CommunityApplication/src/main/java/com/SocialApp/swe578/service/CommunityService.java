@@ -11,7 +11,7 @@ import java.util.List;
 public interface CommunityService {
 
     Community createCommunity(CommunityDto communityDto);
-    //String getCommunityName(CommunityDto communityDto);
+
     void subscribeToCommunity(String communityName);
     void unsubscribeFromCommunity(String communityName);
 
