@@ -40,7 +40,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">User Profile</h5>
-                    <p class="card-text">User Name: <span th:text="${user.email}"></span></p>
+                    <p class="card-text">Username: <span th:text="${user.email}"></span></p>
                     <p class="card-text">First Name: <span th:text="${user.firstName}"></span></p>
                     <p class="card-text">Last Name: <span th:text="${user.lastName}"></span></p>
                     <form th:if="${user.email == #authentication.principal.username}" th:action="@{'/user/' + ${user.email} + '/deleteProfile'}" method="post">

@@ -58,7 +58,9 @@
                     <label class="control-label" for="description"> Post Description </label>
                     <textarea id="description" class="form-control" th:field="*{description}"
                               style="height: 150px;"
-                    required autofocus="autofocus"></textarea>
+                              maxlength="1000" oninput="checkLength(this)"
+                              required autofocus="autofocus"></textarea>
+                    <small id="charCount" class="form-text text-muted">0/1000</small>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Create</button>
@@ -69,4 +71,15 @@
     </div>
 </div>
 </body>
+<script>
+    function checkLength(textarea) {
+        var maxLength = 1000;
+        var length = textarea.value.length;
+        if (length > maxLength) {
+            textarea.value = textarea.value.substring(0, maxLength);
+        }
+        document.getElementById("charCount").innerText = length + "/" + maxLength;
+    }
+</script>
+
 </html>

@@ -7,6 +7,7 @@ import com.SocialApp.swe578.model.User;
 import com.SocialApp.swe578.repository.CommunityRepository;
 import com.SocialApp.swe578.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,8 +42,10 @@ public class PostServiceImp implements PostService {
         Date currentDate = new Date();
         User creator = userService.getAuthUser();
         Community postedCommunity = communityRepository.findByName(postDto.getPostCommunity());
+
         Post newPost = new Post(postDto.getTitle(), postDto.getDescription(), currentDate, creator, postedCommunity);
         return postRepository.save(newPost);
+
     }
     public List<Post> listAllPostsInCommunity(String communityName){
         List<Post> allPosts = postRepository.findAll();
