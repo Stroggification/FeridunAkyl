@@ -65,13 +65,31 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Create</button>
                 </div>
+                <!-- Add dynamic field button START -->
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" onclick="addCustomField()">Add Custom Field</button>
+                </div>
 
+                <div id="customFields"></div>
+
+                <!-- Add dynamic field button END -->
             </form>
         </div>
     </div>
 </div>
 </body>
 <script>
+    // javascript function for adding fields dynamically maybe we can use it for creating custom templates??
+    function addCustomField() {
+        var fieldName = prompt("Enter field name:");
+        if (fieldName !== null && fieldName.trim() !== "") {
+            var fieldHtml = '<div class="form-group">' +
+                '<label class="control-label">' + fieldName + '</label>' +
+                '<input type="text" class="form-control" name="customFields[' + fieldName + ']" />' +
+                '</div>';
+            document.getElementById("customFields").innerHTML += fieldHtml;
+        }
+    }
     function checkLength(textarea) {
         var maxLength = 1000;
         var length = textarea.value.length;

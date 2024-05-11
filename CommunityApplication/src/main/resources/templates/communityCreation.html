@@ -76,6 +76,9 @@
         }else if (length < minLength){
             textarea.setCustomValidity("Community description must be at least " + minLength + " characters long.");
         }
+        else{
+            textarea.setCustomValidity("");
+        }
         document.getElementById("charCount").innerText = length + "/" + maxLength;
     }
 </script>

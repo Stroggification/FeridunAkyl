@@ -1,11 +1,15 @@
 package com.SocialApp.swe578.dto;
 
+import java.util.Map;
+
 public class PostDto {
 
     private String title;
     private String description;
 
     private String postCommunity;
+    //Hashmap will be used to create dynamic fields for the post template its just an idea for now
+    private Map<String, String> customFields;
 
     public PostDto(){}
 
