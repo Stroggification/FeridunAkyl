@@ -1,7 +1,17 @@
 # Community Application
 
 Welcome to our community application repository! This application provides a platform for users to connect, interact, and engage with various communities. Here's an overview of the features and functionalities:
-
+##PLEASE VISIT THE WİKİ PAGE FOR DOCUMANTATON AND DESIGN 
+- GitHub WIKI : [Link](https://github.com/Stroggification/FeridunAkyl/wiki)
+## Technologies Used
+- Java
+- Spring Boot 3(JPA/Hibernate, Thymleaf)
+- Javascript
+- Docker(for containerization)
+- AWS(for deployment)
+- GIT, GITHub ( for version control)
+- MySQL ( as DATABASE)
+  
 ## User Management
 - Users can register with their own unique usernames.
 - Users can edit their profiles, including profile pictures, avatars, bios, etc.
