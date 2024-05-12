@@ -37,6 +37,26 @@ public class User {
     @ManyToMany(mappedBy = "subscribers")
     private List<Community> subscribedCommunities;
 
+    public List<Community> getOwnedCommunities() {
+        return ownedCommunities;
+    }
+
+    public void setOwnedCommunities(List<Community> ownedCommunities) {
+        this.ownedCommunities = ownedCommunities;
+    }
+
+    public void setSubscribedCommunities(List<Community> subscribedCommunities) {
+        this.subscribedCommunities = subscribedCommunities;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles) {

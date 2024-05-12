@@ -43,11 +43,17 @@ public class PostServiceImp implements PostService {
         User creator = userService.getAuthUser();
         Community postedCommunity = communityRepository.findByName(postDto.getPostCommunity());
 
-        Post newPost = new Post(postDto.getTitle(), postDto.getDescription(), currentDate, creator, postedCommunity);
-        return postRepository.save(newPost);
-
+        if (!postDto.getCustomFields().isEmpty()) {
+        // implement the logic to handle the dynamic fields for custom templates
+            Post newPost = new Post(postDto.getTitle(), postDto.getDescription(), currentDate, creator, postedCommunity, postDto.getCustomFields());
+            return postRepository.save(newPost);
+        }else {
+            Post newPost = new Post(postDto.getTitle(), postDto.getDescription(), currentDate, creator, postedCommunity);
+            return postRepository.save(newPost);
+        }
     }
-    public List<Post> listAllPostsInCommunity(String communityName){
+
+    public List<Post> listAllPostsInCommunity(String communityName) {
         List<Post> allPosts = postRepository.findAll();
         List<Post> communityPostList = new ArrayList<>();
         for (Post post : allPosts) {
@@ -64,12 +70,12 @@ public class PostServiceImp implements PostService {
         User currentUser = userService.getAuthUser();
         Optional<Post> postOptional = postRepository.findById(postId);
         Post post = postOptional.orElse(null);
-        if(currentUser.equals(post.getCreator())){
+        if (currentUser.equals(post.getCreator())) {
             postRepository.delete(post);
             isDeleted = true;
             return isDeleted;
-        }else {
-        return isDeleted;
+        } else {
+            return isDeleted;
         }
     }
 

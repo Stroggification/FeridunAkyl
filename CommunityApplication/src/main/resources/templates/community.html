@@ -96,7 +96,15 @@
                             </div>
                             <!-- Add more attributes as needed -->
                         </div>
+                    <div th:if="${not #lists.isEmpty(post.customFields)}">
 
+                        <ul>
+                            <li th:each="field : ${post.customFields}">
+                                <p th:if="${field.value != null}" th:text="${field.key + ': ' + field.value}"></p>
+                                <p th:unless="${field.value != null}">No value available for <span th:text="${field.key}"></span></p>
+                            </li>
+                        </ul>
+                    </div>
 
                 </div>
                  </div>

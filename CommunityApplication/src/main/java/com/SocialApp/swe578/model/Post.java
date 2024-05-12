@@ -3,6 +3,8 @@ package com.SocialApp.swe578.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Entity
@@ -26,6 +28,13 @@ public class Post {
     @JoinColumn(name = "community_id", nullable = false)
     private Community postCommunity;
 
+    @ElementCollection
+    @CollectionTable(name = "post_custom_fields", joinColumns = @JoinColumn(name = "post_id"))
+    @MapKeyColumn(name = "field_name")
+    @Column(name = "field_value")
+    private Map<String, String> customFields = new HashMap<>();
+
+
     public Post() {
     }
 
@@ -35,6 +44,23 @@ public class Post {
         this.date = date;
         this.creator = creator;
         this.postCommunity = postCommunity;
+    }
+
+    public Post(String title, String description, Date date, User creator, Community postCommunity, Map<String, String> customFields) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.creator = creator;
+        this.postCommunity = postCommunity;
+        this.customFields = customFields;
+    }
+
+    public Map<String, String> getCustomFields() {
+        return customFields;
+    }
+
+    public void setCustomFields(Map<String, String> customFields) {
+        this.customFields = customFields;
     }
 
     public Long getId() {
