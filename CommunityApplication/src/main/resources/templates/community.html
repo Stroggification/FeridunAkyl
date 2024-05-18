@@ -60,6 +60,9 @@
                 <form th:action="@{'/' + ${communityName} + '/postCreation'}" method="get">
                     <button type="submit" class="btn btn-primary">Create Post</button>
                 </form>
+                <form th:action="@{'/' + ${communityName} + '/templateCreation'}" method="get">
+                    <button type="submit" class="btn btn-primary">Create Template</button>
+                </form>
                 <div th:if="${message}" class="alert alert-warning">
                     <p th:text="${message}"></p>
                 </div>
@@ -83,12 +86,13 @@
 
                         <div class="card-body">
                             <a th:href="@{'/' + ${communityName} + '/' + ${post.getId()}}" style="text-decoration: none;">
+                                <h5 class="card-title" th:text="'Go To Post'"></h5>
                                 <h5 class="card-title" th:text="${post.title}"></h5>
                             </a>
                             <p class="card-text" th:text="${post.description}"></p>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p class="card-text"><small class="text-muted" th:text="${post.date}"></small></p>
+                                    <p class="card-text"><small class="text-muted" th:text="'Post date: ' + ${post.date}"></small></p>
                                 </div>
                                 <div class="col-md-8">
                                     <p class="card-text"><small class="text-muted" th:text="'Posted by: ' + ${post.getCreator().getEmail()}"></small></p>

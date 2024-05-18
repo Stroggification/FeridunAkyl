@@ -45,7 +45,7 @@ public class PostServiceImp implements PostService {
 
         if (!postDto.getCustomFields().isEmpty()) {
         // implement the logic to handle the dynamic fields for custom templates
-            Post newPost = new Post(postDto.getTitle(), postDto.getDescription(), currentDate, creator, postedCommunity, postDto.getCustomFields());
+            Post newPost = new Post(currentDate, creator, postedCommunity, postDto.getCustomFields());
             return postRepository.save(newPost);
         }else {
             Post newPost = new Post(postDto.getTitle(), postDto.getDescription(), currentDate, creator, postedCommunity);

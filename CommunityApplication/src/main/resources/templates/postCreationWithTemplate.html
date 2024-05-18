@@ -38,57 +38,48 @@
 </nav>
 <br>
 <br>
-
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Title</h5>
-                    <p class="card-text" th:text="${post.title}"></p>
-                </div>
-            </div>
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Description</h5>
-                    <p class="card-text" th:text="${post.description}"></p>
-                    <p class="card-text" th:text="'Date Posted: ' + ${post.date}"></p>
-                    <p class="card-text" th:text="'Posted by: ' + ${post.getCreator().getEmail()}"></p>
+                    <p class="card-text" th:text="${template.templateName}"></p>
                 </div>
             </div>
 
-            <!-- Display custom fields within the card -->
-            <div th:if="${not #lists.isEmpty(post.customFields)}" class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Template Fields</h5>
-                    <ul class="list-unstyled">
-                        <li th:each="field : ${post.customFields}">
-                            <p th:if="${field.value != null}" th:text="${field.key + ': ' + field.value}"></p>
-                            <p th:unless="${field.value != null}">No value available for <span th:text="${field.key}"></span></p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Delete post button at the bottom -->
-            <div class="card mb-3">
-                <div class="card-body">
-                    <div th:if="${post.getCreator().getEmail() == #authentication.principal.username}">
-                        <form th:action="@{'/' + ${communityName} + '/' + ${postId} + '/delete'}" method="post">
-                            <input type="hidden" name="_method" value="post"/>
-                            <button type="submit" class="btn btn-danger">Delete Post</button>
-                        </form>
+            <form id="postForm" th:action="@{'/' + ${communityName} + '/postCreation'}" method="post" th:object="${post}">
+                <!-- Display custom fields within the card -->
+                <div th:if="${not #lists.isEmpty(template.customFields)}" class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Custom Fields</h5>
+                        <ul class="list-unstyled">
+                            <li th:each="field : ${template.customFields}">
+                                <p th:if="${field.value != null}" th:text="${field.key}"></p>
+                                <input type="text" class="form-control custom-field" th:name="'customFields[' + ${field.key} + ']'" th:value="${field.value}" />
+                                <p th:unless="${field.value != null}">No value available for <span th:text="${field.key}"></span></p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-success" id="submitButton">Submit</button>
+            </form>
         </div>
     </div>
 </div>
 
-
-
-
-
 </body>
-</html>
+<script>
+    document.getElementById("postForm").addEventListener("submit", function(event) {
+        var customFields = document.getElementsByClassName("custom-field");
+        for (var i = 0; i < customFields.length; i++) {
+            if (customFields[i].value.trim() === "") {
+                alert("Please fill in all fields.");
+                event.preventDefault();
+                return;
+            }
+        }
+    });
+</script>
 
+</html>

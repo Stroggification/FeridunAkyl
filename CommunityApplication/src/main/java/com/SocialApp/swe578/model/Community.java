@@ -20,6 +20,10 @@ public class Community {
     //for cascade deletion
     @OneToMany(mappedBy = "postCommunity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "templateCommunity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Template> templates;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "community_users",
@@ -55,6 +59,22 @@ public class Community {
 
     public String getDescription() {
         return description;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Template> getTemplates() {
+        return templates;
+    }
+
+    public void setTemplates(List<Template> templates) {
+        this.templates = templates;
     }
 
     public void setDescription(String description) {

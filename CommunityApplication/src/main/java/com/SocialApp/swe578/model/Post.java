@@ -46,9 +46,7 @@ public class Post {
         this.postCommunity = postCommunity;
     }
 
-    public Post(String title, String description, Date date, User creator, Community postCommunity, Map<String, String> customFields) {
-        this.title = title;
-        this.description = description;
+    public Post(Date date, User creator, Community postCommunity, Map<String, String> customFields) {
         this.date = date;
         this.creator = creator;
         this.postCommunity = postCommunity;

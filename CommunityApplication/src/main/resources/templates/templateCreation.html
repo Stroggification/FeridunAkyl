@@ -41,65 +41,42 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <h1> Post Creation Page </h1>
+            <h1> Template Creation Page </h1>
             <div th:if="${param.success}">
-                <div class="alert alert-info">You've successfully Created a Post, Go check it out!
+                <div class="alert alert-info">You've successfully Created a Template, Go check it out!
                 </div>
             </div>
 
-            <h1> Create Post with Default Template</h1>
-            <form th:action="@{'/' + ${communityName} + '/postCreation'}" method="post" th:object="${post}">
+            <h1> Template Creation</h1>
+            <form th:action="@{'/' + ${communityName} + '/templateCreation'}" method="post" th:object="${template}">
                 <div class="form-group">
-                    <label class="control-label" for="name"> Post Title </label>
-                    <input id="name" class="form-control" th:field="*{title}"
-                           required autofocus="autofocus" />
+                    <label class="control-label" for="templateName">Template Name</label>
+                    <input id="templateName" class="form-control" th:field="*{templateName}" required autofocus="autofocus"/>
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="description"> Post Description </label>
-                    <textarea id="description" class="form-control" th:field="*{description}"
-                              style="height: 150px;"
-                              maxlength="1000" oninput="checkLength(this)"
-                              required autofocus="autofocus"></textarea>
-                    <small id="charCount" class="form-text text-muted">0/1000</small>
-                </div>
-
-
+                <div id="customFields"></div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Create</button>
                 </div>
-
-
-            </form>
-
-            <h2>You may also choose a custom template!</h2>
-            <div th:each="templates : ${templates}" class="col-md-12">
-                <div class="card mb-4">
-
-                    <div class="card-body">
-                        <a th:href="@{'/' + ${communityName} + '/' + 'templates' + '/' + ${templates.getId()}}" style="text-decoration: none;">
-                            <h5 class="card-title" th:text="${templates.templateName}"></h5>
-                        </a>
-
-                        <!-- Add more attributes as needed -->
-                    </div>
-                    <div th:if="${not #lists.isEmpty(templates.customFields)}">
-
-                        <ul>
-                            <li th:each="field : ${templates.customFields}">
-                                <p th:if="${field.value != null}" th:text="${field.key + ': ' + field.value}"></p>
-                                <p th:unless="${field.value != null}">No value available for <span th:text="${field.key}"></span></p>
-                            </li>
-                        </ul>
-                    </div>
-
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" onclick="addCustomField()">Add Custom Field</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 </body>
 <script>
-
+    // javascript function for adding fields dynamically maybe we can use it for creating custom templates??
+    function addCustomField() {
+        var fieldName = prompt("Enter field name:");
+        if (fieldName !== null && fieldName.trim() !== "") {
+            var fieldHtml = '<div class="form-group">' +
+                '<label class="control-label">' + fieldName + '</label>' +
+                '<input type="text" class="form-control" name="customFields[' + fieldName + ']" />' +
+                '</div>';
+            document.getElementById("customFields").innerHTML += fieldHtml;
+        }
+    }
     function checkLength(textarea) {
         var maxLength = 1000;
         var length = textarea.value.length;

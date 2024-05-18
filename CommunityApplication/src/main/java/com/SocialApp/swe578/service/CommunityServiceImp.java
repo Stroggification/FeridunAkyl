@@ -3,9 +3,11 @@ package com.SocialApp.swe578.service;
 import com.SocialApp.swe578.dto.CommunityDto;
 import com.SocialApp.swe578.dto.UserRegistrationDto;
 import com.SocialApp.swe578.model.Community;
+import com.SocialApp.swe578.model.Post;
 import com.SocialApp.swe578.model.User;
 import com.SocialApp.swe578.repository.CommunityRepository;
 import com.SocialApp.swe578.repository.UserRepository;
+import org.hibernate.dialect.PostgreSQLUUIDJdbcType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -99,5 +101,19 @@ public class CommunityServiceImp implements CommunityService {
             community.getSubscribers().remove(user);
             communityRepository.save(community);
         }
+    }
+
+    @Override
+    public boolean findCommunity(String communityName) {
+        boolean isFound = false;
+        List<Community> allCommunities = communityRepository.findAll();
+        ;
+        for (Community community : allCommunities) {
+            if (community.getName().equalsIgnoreCase(communityName)) {
+                isFound = true;
+                return isFound;
+            }
+        }
+        return isFound;
     }
 }
