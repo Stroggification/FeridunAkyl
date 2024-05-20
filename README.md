@@ -3,6 +3,7 @@
 Welcome to our community application repository! This application provides a platform for users to connect, interact, and engage with various communities. Here's an overview of the features and functionalities:
 ##PLEASE VISIT THE WİKİ PAGE FOR DOCUMANTATON AND DESIGN 
 - GitHub WIKI : [Link](https://github.com/Stroggification/FeridunAkyl/wiki)
+- Demo Video : [Link](https://drive.google.com/file/d/1m0mzEUppBqtZz5XCErUEXCgLzTZmIVXD/view)
 ## Technologies Used
 - Java
 - Spring Boot 3(JPA/Hibernate, Thymleaf)
